@@ -1,25 +1,20 @@
- #Шаблон проекта Symfony
+# Шаблон docker для запуска проекта Symfony
+Минимальный docker контейнер для запуска проекта на фреймворке Symfony
 
-#Getting started
-##dev
+# Getting started
+##  dev
 1. `HTTP_PORT=<HTTP_PORT> docker compose up --build`
 
-#production
+# production
 2. `HTTP_PORT=<HTTP_PORT> docker compose -f docker-compose.yml up --build`
-
-###линкз
-* Приложение https://github.com/symfony/demo
-* Docker образ https://github.com/dunglas/symfony-docker
 
 ## Фичерс
 
 * nginx 😂
 * php 8.2 🤠
 * alpine 🥵
-* mysql 🥱
-* сумфони 6 🤩
 
-#cs fix:
+# cs fix:
 
 if нот сделано 
 
