@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine3.17 AS app_php
+FROM php:8.2-fpm-alpine3.20 AS app_php
 
 ENV APP_ENV=prod
 
@@ -24,11 +24,12 @@ RUN set -eux; \
     ;
 
 ###> recipes ###
-RUN apk add --no-cache bash mysql-client
+RUN apk add --no-cache bash php82-pgsql
 
 RUN set -eux; \
     install-php-extensions  \
-    pdo_mysql;
+    pdo \
+    pdo_pgsql;
 ###< recipes ###
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
@@ -70,12 +71,12 @@ COPY --link  . .
 RUN rm -Rf docker/
 
 RUN set -eux; \
-	mkdir -p var/cache var/log; \
+	  mkdir -p var/cache var/log; \
     if [ -f composer.json ]; then \
-		composer dump-autoload --classmap-authoritative --no-dev; \
-		composer dump-env prod; \
-		composer run-script --no-dev post-install-cmd; \
-		chmod +x bin/console; sync; \
+        composer dump-autoload --classmap-authoritative --no-dev; \
+        composer dump-env prod; \
+        composer run-script --no-dev post-install-cmd; \
+        chmod +x bin/console; sync; \
     fi
 
 FROM app_php AS app_php_dev
